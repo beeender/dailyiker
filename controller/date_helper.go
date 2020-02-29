@@ -31,4 +31,3 @@ func (blog *Blog) dateHelper(opts *raymond.Options) interface{} {
 	}
 	return date.Format(format)
 }
-

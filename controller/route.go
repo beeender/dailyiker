@@ -42,6 +42,16 @@ func (blog *Blog) completePostUrl(post *model.Post) {
 	post.URL = url
 }
 
+func (blog *Blog) completeTagsInf(tags []model.Tag) {
+	for i := range tags {
+		blog.completeTagInf(&tags[i])
+	}
+}
+
+func (blog *Blog) completeTagInf(tag *model.Tag) {
+	tag.URL = fmt.Sprintf(`/tag/%s/`, tag.Name)
+}
+
 var imgRE = regexp.MustCompile(`<img[^>]+\bsrc=["']([^"']+)["']`)
 
 // if your img's are properly formed with doublequotes then use this, it's more efficient.

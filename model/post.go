@@ -6,21 +6,21 @@ import (
 )
 
 type Post struct {
-	ID string
-	UUID string
-	Title        string
-	PlainText string `gorm:"column:plaintext"`
-	HTML string
-	FeatureImage string `gorm:"column:feature_image" handlebars:"feature_image"`
+	ID            string
+	UUID          string
+	Title         string
+	PlainText     string `gorm:"column:plaintext"`
+	HTML          string
+	FeatureImage  string `gorm:"column:feature_image" handlebars:"feature_image"`
 	CustomExcerpt string `gorm:"column:custom_excerpt"`
 
 	PublishedAt time.Time `gorm:"column:published_at"`
 
-	Author User	`gorm:"-"`
-	Authors Users	`gorm:"-"`
+	Author   User   `gorm:"-"`
+	Authors  Users  `gorm:"-"`
 	AuthorID string `gorm:"column:author_id"`
 
-	URL string `gorm:"-" handlebars:"url"`
+	URL     string             `gorm:"-" handlebars:"url"`
 	Content raymond.SafeString `gorm:"-"`
 }
 
@@ -62,7 +62,7 @@ func (q *DBDataQuery) LastUpdatedAt() time.Time {
 	return time.Now()
 }
 
-func (q *DBDataQuery) queryPostAuthors(post *Post)  {
+func (q *DBDataQuery) queryPostAuthors(post *Post) {
 	q.DB.Where("id = ?", post.AuthorID).First(&post.Author)
 	q.DB.Table("users").
 		Joins("JOIN posts_authors ON posts_authors.author_id = users.id").

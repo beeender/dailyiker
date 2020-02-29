@@ -34,4 +34,3 @@ func generateExcerpt(content string, words int) string {
 	}
 	return string(runeStr[0:end])
 }
-

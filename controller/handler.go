@@ -30,9 +30,9 @@ func (blog *Blog) postHandler(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	y,_ := strconv.Atoi(strList[0])
-	m,_ := strconv.Atoi(strList[1])
-	d,_ := strconv.Atoi(strList[2])
+	y, _ := strconv.Atoi(strList[0])
+	m, _ := strconv.Atoi(strList[1])
+	d, _ := strconv.Atoi(strList[2])
 	t := strList[3]
 
 	post := blog.query.PostByTitle(t)
@@ -52,9 +52,9 @@ func (blog *Blog) postHandler(c echo.Context) error {
 
 func (blog *Blog) metaArgs() map[string]interface{} {
 	args := map[string]interface{}{
-		"site":  blog.site,
+		"site":         blog.site,
 		"published_at": blog.query.LastUpdatedAt(),
-		"meta_title": blog.site.MetaTitle,
+		"meta_title":   blog.site.MetaTitle,
 	}
 	return args
 }

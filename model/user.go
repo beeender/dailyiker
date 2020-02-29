@@ -3,8 +3,8 @@ package model
 import "github.com/aymerick/raymond"
 
 type User struct {
-	ID   string
-	Name string
+	ID           string
+	Name         string
 	ProfileImage raymond.SafeString `gorm:"column:profile_image" handlebars:"profile_image"`
 }
 

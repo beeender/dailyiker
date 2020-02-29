@@ -6,10 +6,9 @@ import (
 	"io"
 )
 
-
 const (
 	RenderIndex = "index"
-	RenderPost = "post"
+	RenderPost  = "post"
 )
 
 func (theme *Theme) Render(w io.Writer, name string, args interface{}, c echo.Context) error {

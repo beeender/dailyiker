@@ -10,11 +10,11 @@ import (
 
 func main() {
 	b := controller.Blog{
-		Echo: echo.New(),
+		Echo:        echo.New(),
 		HostAndPort: "127.0.0.1:8084",
-		ContentDir: "/home/cc/repo/dailyiker/content",
+		ContentDir:  "/home/cc/repo/dailyiker/content",
 	}
-	b.RootURL, _ =  url.Parse("http://127.0.0.1:8084")
+	b.RootURL, _ = url.Parse("http://127.0.0.1:8084")
 
 	b.Config.PostsPerPage = 5
 

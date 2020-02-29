@@ -20,7 +20,6 @@ type Blog struct {
 
 	site  model.Site
 	query model.Query
-
 }
 
 type Config struct {
@@ -47,6 +46,7 @@ func (blog *Blog) Start() error {
 	raymond.RegisterHelper("foreach", blog.foreachHelper)
 	raymond.RegisterHelper("date", blog.dateHelper)
 	raymond.RegisterHelper("t", blog.tHelper)
+	raymond.RegisterHelper("get", blog.getHelper)
 
 	// Load theme
 	ren, err := view.NewTheme(blog.themePath())

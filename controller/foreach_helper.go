@@ -32,4 +32,3 @@ func (blog *Blog) foreachHelper(context interface{}, options *raymond.Options) i
 	}
 	return raymond.SafeString(result)
 }
-
