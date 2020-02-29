@@ -13,11 +13,8 @@ func (blog *Blog) indexHandler(c echo.Context) error {
 	for i := range posts {
 		blog.completePostInfo(&posts[i])
 	}
-	args := map[string]interface{}{
-		"site":  blog.site,
-		"posts": posts,
-		"published_at": blog.query.LastUpdatedAt(),
-	}
+	args := blog.metaArgs()
+	args["posts"] = posts
 	return c.Render(http.StatusOK, "index", args)
 }
 
@@ -48,11 +45,16 @@ func (blog *Blog) postHandler(c echo.Context) error {
 	}
 
 	post.Content = raymond.SafeString(post.HTML)
-	args := map[string]interface{}{
-		"site":  blog.site,
-		"post": post,
-		"published_at": blog.query.LastUpdatedAt(),
-	}
+	args := blog.metaArgs()
+	args["post"] = post
 	return c.Render(http.StatusAccepted, "post", args)
 }
 
+func (blog *Blog) metaArgs() map[string]interface{} {
+	args := map[string]interface{}{
+		"site":  blog.site,
+		"published_at": blog.query.LastUpdatedAt(),
+		"meta_title": blog.site.MetaTitle,
+	}
+	return args
+}
