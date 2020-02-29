@@ -20,6 +20,7 @@ type Blog struct {
 
 	site  model.Site
 	query model.Query
+	theme *view.Theme
 }
 
 type Config struct {
@@ -47,13 +48,15 @@ func (blog *Blog) Start() error {
 	raymond.RegisterHelper("date", blog.dateHelper)
 	raymond.RegisterHelper("t", blog.tHelper)
 	raymond.RegisterHelper("get", blog.getHelper)
+	raymond.RegisterHelper("page_url", blog.pageURLHelper)
+	raymond.RegisterHelper("pagination", blog.paginationHelper)
 
 	// Load theme
-	ren, err := view.NewTheme(blog.themePath())
+	blog.theme, err = view.NewTheme(blog.themePath())
 	if err != nil {
 		return err
 	}
-	blog.Echo.Renderer = ren
+	blog.Echo.Renderer = blog.theme
 
 	// Register routes
 	if err := blog.initRoute(); err != nil {

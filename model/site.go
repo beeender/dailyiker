@@ -26,5 +26,5 @@ func (site *Site) Load(q SettingsQuery) {
 	if s := q.SettingByKey("logo"); s != nil {
 		site.Logo = s.Value
 	}
-	site.Theme = "zvikov"
+	site.Theme = "fizzy"
 }

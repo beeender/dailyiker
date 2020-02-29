@@ -25,7 +25,7 @@ type Post struct {
 }
 
 type PostsQuery interface {
-	RecentPosts(count int) []Post
+	PostsAtPage(postsPerPage int, page int) []Post
 	PostByTitle(title string) *Post
 	LastUpdatedAt() time.Time
 }
@@ -35,9 +35,14 @@ func (Post) TableName() string {
 	return "posts"
 }
 
-func (q *DBDataQuery) RecentPosts(count int) []Post {
+func (q *DBDataQuery) PostsAtPage(postsPerPage int, page int) []Post {
+	page -= 1
 	var posts []Post
-	q.DB.Where("status = 'published'").Order("published_at desc").Limit(count).Find(&posts)
+	q.DB.Where("status = 'published'").
+		Order("published_at desc").
+		Offset(page * postsPerPage).
+		Limit(postsPerPage).
+		Find(&posts)
 	for i := range posts {
 		q.queryPostAuthors(&posts[i])
 	}

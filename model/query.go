@@ -8,6 +8,7 @@ type Query interface {
 	SettingsQuery
 	PostsQuery
 	TagsQuery
+	PaginationQuery
 }
 
 type DBDataQuery struct {

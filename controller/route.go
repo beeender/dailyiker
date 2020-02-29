@@ -12,6 +12,7 @@ func (blog *Blog) initRoute() error {
 	blog.Echo.Static("/content/images", filepath.Join(blog.ContentDir, "images"))
 	blog.Echo.Static("/assets", filepath.Join(blog.themePath(), "assets"))
 	blog.Echo.GET("/", blog.indexHandler)
+	blog.Echo.GET("/page/*/", blog.pageHandler)
 	blog.Echo.GET("/*/", blog.postHandler)
 
 	return nil
