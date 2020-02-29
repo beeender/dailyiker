@@ -31,6 +31,7 @@ func NewTheme(path string) (*Theme, error) {
 	raymond.RegisterHelper("asset", theme.assetHelper)
 	raymond.RegisterHelper("foreach", theme.foreachHelper)
 	raymond.RegisterHelper("date", theme.dateHelper)
+	raymond.RegisterHelper("t", theme.tHelper)
 
 	return &theme, nil
 }
