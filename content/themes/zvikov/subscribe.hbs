@@ -21,13 +21,7 @@
                     {{/if}}
                 </h1>
                 {{^if success}}
-                    {{subscribe_form
-                        form_class="gh-signin"
-                        input_class="gh-input"
-                        button_class="btn"
-                        placeholder=(t "Your email address")
-                        autofocus="true"
-                    }}
+                    {{subscribe_form form_class="gh-signin" input_class="gh-input" button_class="btn" placeholder=(t "Your email address") autofocus="true" }}
                 {{else}}
                     <p>
                         {{t "You've successfully subscribed to"}} <em>{{@site.title}}</em>
