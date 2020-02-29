@@ -7,6 +7,7 @@ type Site struct {
 	CoverImage  string `handlebars:"cover_image"`
 	Logo        string
 	Theme       string
+	URL         string
 }
 
 func (site *Site) Load(q SettingsQuery) {

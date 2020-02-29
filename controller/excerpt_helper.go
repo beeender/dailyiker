@@ -1,4 +1,4 @@
-package view
+package controller
 
 import (
 	"github.com/aymerick/raymond"
@@ -7,7 +7,7 @@ import (
 	"unicode/utf8"
 )
 
-func (theme *Theme) excerptHelper(options *raymond.Options) interface{} {
+func (blog *Blog) excerptHelper(options *raymond.Options) interface{} {
 	ctx := options.Ctx()
 	post := ctx.(model.Post)
 	excerpt := ""

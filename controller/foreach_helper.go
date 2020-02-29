@@ -1,4 +1,4 @@
-package view
+package controller
 
 import (
 	"github.com/aymerick/raymond"
@@ -6,7 +6,7 @@ import (
 )
 
 // See https://ghost.org/docs/api/v3/handlebars-themes/helpers/foreach/
-func (theme *Theme) foreachHelper(context interface{}, options *raymond.Options) interface{} {
+func (blog *Blog) foreachHelper(context interface{}, options *raymond.Options) interface{} {
 	if !raymond.IsTrue(context) {
 		return options.Inverse()
 	}

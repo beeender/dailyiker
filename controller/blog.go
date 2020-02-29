@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/aymerick/raymond"
 	"github.com/beeender/dailyiker/model"
 	"github.com/beeender/dailyiker/view"
 	"github.com/jinzhu/gorm"
@@ -39,6 +40,13 @@ func (blog *Blog) Start() error {
 
 	// Load basic site information
 	blog.site.Load(blog.query)
+
+	raymond.RegisterHelper("img_url", blog.imgURLHelper)
+	raymond.RegisterHelper("excerpt", blog.excerptHelper)
+	raymond.RegisterHelper("asset", blog.assetHelper)
+	raymond.RegisterHelper("foreach", blog.foreachHelper)
+	raymond.RegisterHelper("date", blog.dateHelper)
+	raymond.RegisterHelper("t", blog.tHelper)
 
 	// Load theme
 	ren, err := view.NewTheme(blog.themePath())

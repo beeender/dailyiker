@@ -1,11 +1,11 @@
-package view
+package controller
 
 import (
 	"github.com/aymerick/raymond"
 	"time"
 )
 
-func (theme *Theme) dateHelper(opts *raymond.Options) interface{} {
+func (blog *Blog) dateHelper(opts *raymond.Options) interface{} {
 	var date time.Time
 	var format string
 	format = opts.HashStr("format")

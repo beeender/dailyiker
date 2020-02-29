@@ -26,13 +26,6 @@ func NewTheme(path string) (*Theme, error) {
 		return nil, err
 	}
 
-	raymond.RegisterHelper("img_url", theme.imgURLHelper)
-	raymond.RegisterHelper("excerpt", theme.excerptHelper)
-	raymond.RegisterHelper("asset", theme.assetHelper)
-	raymond.RegisterHelper("foreach", theme.foreachHelper)
-	raymond.RegisterHelper("date", theme.dateHelper)
-	raymond.RegisterHelper("t", theme.tHelper)
-
 	return &theme, nil
 }
 
