@@ -7,7 +7,7 @@ type Site struct {
 	CoverImage  string `handlebars:"cover_image"`
 	Logo        string
 	Theme       string
-	URL         string
+	URL         string `handlebars:"url"`
 }
 
 func (site *Site) Load(q SettingsQuery) {
@@ -27,4 +27,5 @@ func (site *Site) Load(q SettingsQuery) {
 		site.Logo = s.Value
 	}
 	site.Theme = "fizzy"
+	site.URL = "/"
 }
