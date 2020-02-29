@@ -14,3 +14,9 @@ dailyiker
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+#
+
+.idea/*
+
+content/data/*
+content/images/*
