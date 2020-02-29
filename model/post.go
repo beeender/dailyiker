@@ -27,6 +27,7 @@ type Post struct {
 type PostsQuery interface {
 	RecentPosts(count int) []Post
 	PostByTitle(title string) *Post
+	LastUpdatedAt() time.Time
 }
 
 // Set User's table name to be `profiles`
@@ -50,6 +51,15 @@ func (q *DBDataQuery) PostByTitle(title string) *Post {
 	}
 	q.queryPostAuthors(&post)
 	return &post
+}
+
+func (q *DBDataQuery) LastUpdatedAt() time.Time {
+	var times []time.Time
+	q.DB.Table("posts").Order("updated_at desc").Limit(1).Pluck("updated_at", &times)
+	if len(times) > 0 {
+		return times[0]
+	}
+	return time.Now()
 }
 
 func (q *DBDataQuery) queryPostAuthors(post *Post)  {

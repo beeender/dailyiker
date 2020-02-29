@@ -16,6 +16,7 @@ func (blog *Blog) indexHandler(c echo.Context) error {
 	args := map[string]interface{}{
 		"site":  blog.site,
 		"posts": posts,
+		"published_at": blog.query.LastUpdatedAt(),
 	}
 	return c.Render(http.StatusOK, "index", args)
 }
@@ -50,6 +51,7 @@ func (blog *Blog) postHandler(c echo.Context) error {
 	args := map[string]interface{}{
 		"site":  blog.site,
 		"post": post,
+		"published_at": blog.query.LastUpdatedAt(),
 	}
 	return c.Render(http.StatusAccepted, "post", args)
 }
