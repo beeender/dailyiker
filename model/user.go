@@ -15,6 +15,10 @@ func (User) TableName() string {
 	return "users"
 }
 
+func (user User) String() string {
+	return user.Name
+}
+
 func (users Users) String() string {
 	s := ""
 	for i, u := range users {
