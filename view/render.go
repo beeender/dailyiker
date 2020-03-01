@@ -1,6 +1,8 @@
 package view
 
 import (
+	"github.com/aymerick/raymond"
+	"github.com/beeender/dailyiker/model"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/labstack/echo"
 	"io"
@@ -20,6 +22,28 @@ func (theme *Theme) Render(w io.Writer, name string, args interface{}, c echo.Co
 	}
 	return echo.ErrNotFound
 }
+
+func (theme *Theme)RenderPagination(pagination *model.Pagination) raymond.SafeString {
+	template := theme.partials["pagination"]
+	if template == nil {
+		return ""
+	}
+	ret, _ := template.Exec(pagination)
+	return raymond.SafeString(ret)
+}
+
+func (theme *Theme)RenderNavigation(ctx map[string]interface{}) raymond.SafeString {
+	template := theme.partials["navigation"]
+	if template == nil {
+		return ""
+	}
+	ret, err := template.Exec(ctx)
+	if err != nil {
+		return ""
+	}
+	return raymond.SafeString(ret)
+}
+
 
 func (theme *Theme) renderIndex(w io.Writer, args interface{}, _ echo.Context) error {
 	ctx := args.(map[string]interface{})

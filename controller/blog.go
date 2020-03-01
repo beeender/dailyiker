@@ -50,6 +50,8 @@ func (blog *Blog) Start() error {
 	raymond.RegisterHelper("get", blog.getHelper)
 	raymond.RegisterHelper("page_url", blog.pageURLHelper)
 	raymond.RegisterHelper("pagination", blog.paginationHelper)
+	raymond.RegisterHelper("navigation", blog.navigationHelper)
+	raymond.RegisterHelper("url", blog.urlHelper)
 
 	// Load theme
 	blog.theme, err = view.NewTheme(blog.themePath())

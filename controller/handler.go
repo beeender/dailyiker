@@ -107,7 +107,7 @@ func (blog *Blog) createPagination(page int) model.Pagination {
 
 func (blog *Blog) metaArgs() map[string]interface{} {
 	args := map[string]interface{}{
-		"site":         blog.site,
+		"site":         blog.site.Clone(),
 		"published_at": blog.query.LastUpdatedAt(),
 		"meta_title":   blog.site.MetaTitle,
 	}

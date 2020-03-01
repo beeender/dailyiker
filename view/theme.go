@@ -2,7 +2,6 @@ package view
 
 import (
 	"github.com/aymerick/raymond"
-	"github.com/beeender/dailyiker/model"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,15 +27,6 @@ func NewTheme(path string) (*Theme, error) {
 	}
 
 	return &theme, nil
-}
-
-func (theme *Theme)RenderPagination(pagination *model.Pagination) raymond.SafeString {
-	template := theme.partials["pagination"]
-	if template == nil {
-		return ""
-	}
-	ret, _ := template.Exec(pagination)
-	return raymond.SafeString(ret)
 }
 
 func (theme *Theme) load() error {

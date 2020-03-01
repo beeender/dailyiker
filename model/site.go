@@ -8,6 +8,7 @@ type Site struct {
 	Logo        string
 	Theme       string
 	URL         string `handlebars:"url"`
+	Navigation []Navigation
 }
 
 func (site *Site) Load(q SettingsQuery) {
@@ -28,4 +29,11 @@ func (site *Site) Load(q SettingsQuery) {
 	}
 	site.Theme = "fizzy"
 	site.URL = "/"
+	site.Navigation = NewNavigations()
+}
+
+func (site *Site) Clone() Site {
+	newSite := *site
+	newSite.Navigation = append(site.Navigation[:0:0], site.Navigation...)
+	return newSite
 }
