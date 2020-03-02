@@ -5,6 +5,7 @@ import (
 	"github.com/beeender/dailyiker/model"
 	"github.com/labstack/echo"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -109,6 +110,11 @@ func (blog *Blog) postHandler(c echo.Context) error {
 	d, _ := strconv.Atoi(strList[2])
 	t := strList[3]
 
+	var err error
+	t, err = url.QueryUnescape(t)
+	if err != nil {
+		return echo.ErrNotFound
+	}
 	post := blog.query.PostByTitle(t)
 	if post == nil {
 		return echo.ErrNotFound
