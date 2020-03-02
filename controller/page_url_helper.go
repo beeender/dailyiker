@@ -13,7 +13,7 @@ func (blog *Blog) pageURLHelper(page string, opts *raymond.Options) interface{} 
 	if tag == nil {
 		tag = valueOfField(ctx, "Tag")
 	}
-	if tag == nil  || len(tag.(*model.Tag).Name) == 0  {
+	if !raymond.IsTrue(tag)  || len(tag.(*model.Tag).Name) == 0  {
 		if page == "1" {
 			return "/"
 		}

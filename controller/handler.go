@@ -113,6 +113,7 @@ func (blog *Blog) postHandler(c echo.Context) error {
 	if post == nil {
 		return echo.ErrNotFound
 	}
+	post.Tags = blog.query.TagsByPost(post)
 
 	if y != post.PublishedAt.Year() || m != int(post.PublishedAt.Month()) || d != post.PublishedAt.Day() {
 		return echo.ErrNotFound

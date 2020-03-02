@@ -9,6 +9,7 @@ import (
 )
 
 func (blog *Blog) initRoute() error {
+	blog.Echo.Static("/favicon.ico", filepath.Join(blog.ContentDir, "images/favicon.png"))
 	blog.Echo.Static("/content/images", filepath.Join(blog.ContentDir, "images"))
 	blog.Echo.Static("/assets", filepath.Join(blog.themePath(), "assets"))
 	blog.Echo.GET("/", blog.indexHandler)

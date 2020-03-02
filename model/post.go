@@ -22,6 +22,7 @@ type Post struct {
 
 	URL     string             `gorm:"-" handlebars:"url"`
 	Content raymond.SafeString `gorm:"-"`
+	Tags    []Tag `gorm:"-"`
 }
 
 type PostsQuery interface {

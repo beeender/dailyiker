@@ -20,6 +20,7 @@ type Tag struct {
 type TagsQuery interface {
 	Tags(count int) []Tag
 	TagByName(name string) *Tag
+	TagsByPost(post *Post) []Tag
 }
 
 func (Tag) Table() string {
@@ -48,6 +49,9 @@ ORDER BY count DESC
 `, limit)
 
 	db = db.Raw(sql).Scan(&tags)
+	for i := range tags {
+		tags[i].makeURL()
+	}
 	return tags
 }
 
@@ -56,5 +60,21 @@ func (q *DBDataQuery) TagByName(name string) *Tag {
 	if q.DB.Where("name = ?", name).Find(&tag).RecordNotFound() {
 		return nil
 	}
+	tag.makeURL()
 	return &tag
+}
+
+func (q *DBDataQuery) TagsByPost(post *Post) []Tag {
+	var tags []Tag
+	q.DB.Table("tags").
+		Joins("JOIN posts_tags ON tags.id = posts_tags.tag_id AND posts_tags.post_id = ?", post.ID).
+		Find(&tags)
+	for i := range tags {
+		tags[i].makeURL()
+	}
+	return tags
+}
+
+func (tag *Tag)makeURL() {
+	tag.URL = fmt.Sprintf("/tag/%s/", tag.Name)
 }
