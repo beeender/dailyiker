@@ -14,6 +14,8 @@ func (blog *Blog) initRoute() error {
 	blog.Echo.GET("/", blog.indexHandler)
 	blog.Echo.GET("/page/*/", blog.pageHandler)
 	blog.Echo.GET("/*/", blog.postHandler)
+	blog.Echo.GET("/tag/", blog.tagHandler)
+	blog.Echo.GET("/tag/*/page/*/", blog.tagPageHandler)
 
 	return nil
 }

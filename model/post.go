@@ -25,7 +25,7 @@ type Post struct {
 }
 
 type PostsQuery interface {
-	PostsAtPage(postsPerPage int, page int) []Post
+	PostsAtPage(tag *Tag, postsPerPage int, page int) []Post
 	PostByTitle(title string) *Post
 	LastUpdatedAt() time.Time
 }
@@ -35,11 +35,15 @@ func (Post) TableName() string {
 	return "posts"
 }
 
-func (q *DBDataQuery) PostsAtPage(postsPerPage int, page int) []Post {
+func (q *DBDataQuery) PostsAtPage(tag *Tag, postsPerPage int, page int) []Post {
 	page -= 1
 	var posts []Post
-	q.DB.Where("status = 'published'").
-		Order("published_at desc").
+	db := q.DB.Where("status = 'published'")
+	if tag != nil {
+		db = db.Joins("JOIN posts_tags ON posts_tags.post_id = posts.id AND posts_tags.tag_id = ?", tag.ID)
+	}
+
+	db.Order("published_at desc").
 		Offset(page * postsPerPage).
 		Limit(postsPerPage).
 		Find(&posts)

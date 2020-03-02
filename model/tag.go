@@ -19,6 +19,7 @@ type Tag struct {
 
 type TagsQuery interface {
 	Tags(count int) []Tag
+	TagByName(name string) *Tag
 }
 
 func (Tag) Table() string {
@@ -48,4 +49,12 @@ ORDER BY count DESC
 
 	db = db.Raw(sql).Scan(&tags)
 	return tags
+}
+
+func (q *DBDataQuery) TagByName(name string) *Tag {
+	var tag Tag
+	if q.DB.Where("name = ?", name).Find(&tag).RecordNotFound() {
+		return nil
+	}
+	return &tag
 }

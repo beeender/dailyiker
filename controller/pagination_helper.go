@@ -9,5 +9,5 @@ func (blog *Blog) paginationHelper(opts *raymond.Options) interface{} {
 	ctx := opts.Ctx().(map[string]interface{})
 	pagination := ctx["pagination"].(model.Pagination)
 
-	return blog.theme.RenderPagination(&pagination)
+	return blog.theme.RenderPagination(pagination)
 }

@@ -4,7 +4,8 @@ import "reflect"
 
 func valueOfField(d interface{}, field string) interface{} {
 	v := reflect.ValueOf(d)
-	if v.Kind() != reflect.Struct {
+	k := v.Kind()
+	if k != reflect.Struct {
 		return nil
 	}
 	fv := v.FieldByName(field)
@@ -16,7 +17,8 @@ func valueOfField(d interface{}, field string) interface{} {
 
 func valueOfMap(d interface{}, key string) interface{} {
 	v := reflect.ValueOf(d)
-	if v.Kind() != reflect.Map {
+	k := v.Kind()
+	if k != reflect.Map {
 		return nil
 	}
 	m := v.Interface().(map[string]interface{})

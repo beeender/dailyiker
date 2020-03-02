@@ -15,15 +15,34 @@ type Pagination struct {
 	Next int
 	// previous page
 	Prev int
+	Tag  *Tag
 }
 
 type PaginationQuery interface {
-	NewPagination(tag string, postsPerPage int) Pagination
+	NewPagination(tag string, postsPerPage int) *Pagination
 }
 
-func (q *DBDataQuery) NewPagination(_ string, postsPerPage int) Pagination {
+func (q *DBDataQuery) NewPagination(tagName string, postsPerPage int) *Pagination {
 	var pagination Pagination
-	q.DB.Table("posts").Where("status = 'published'").Count(&pagination.Total)
+	var tag *Tag
+	if len(tagName) > 0 {
+		tag = q.TagByName(tagName)
+		if tag == nil {
+			return nil
+		}
+	}
+
+	db := q.DB.Table("posts").
+		Where("status = 'published'")
+
+	if tag != nil {
+		pagination.Tag = tag
+		db = db.Joins(
+			"JOIN posts_tags ON posts.id = posts_tags.post_id AND posts_tags.tag_id = ? ",
+			tag.ID)
+	}
+
+	db.Count(&pagination.Total)
 
 	if postsPerPage > 0 {
 		pagination.Limit = strconv.Itoa(postsPerPage)
@@ -40,5 +59,5 @@ func (q *DBDataQuery) NewPagination(_ string, postsPerPage int) Pagination {
 		pagination.Page = 1
 	}
 
-	return pagination
+	return &pagination
 }
