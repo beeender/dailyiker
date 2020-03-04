@@ -3,20 +3,30 @@ package controller
 import (
 	"fmt"
 	"github.com/beeender/dailyiker/model"
-	"path"
 	"path/filepath"
 	"regexp"
 )
 
 func (blog *Blog) initRoute() error {
-	blog.Echo.Static("/favicon.ico", filepath.Join(blog.ContentDir, "images/favicon.png"))
+	blog.Echo.GET(joinPath(blog.Config.URLPrefix, "/"),
+		blog.indexHandler)
+
+	blog.Echo.GET(joinPath(blog.Config.URLPrefix, "/page/*/") ,
+		blog.pageHandler)
+	blog.Echo.GET(joinPath(blog.Config.URLPrefix, "/*/"),
+		blog.postHandler)
+	blog.Echo.GET(joinPath(blog.Config.URLPrefix, "/tag/"),
+		blog.tagHandler)
+	blog.Echo.GET(joinPath(blog.Config.URLPrefix, "/tag/*/page/*/"),
+		blog.tagPageHandler)
+
+	blog.Echo.Static(joinPath(blog.Config.URLPrefix, "/favicon.ico"),
+		filepath.Join(blog.ContentDir, "images/favicon.png"))
+	blog.Echo.Static(joinPath(blog.Config.URLPrefix, "/content/images"),
+		filepath.Join(blog.ContentDir, "images"))
 	blog.Echo.Static("/content/images", filepath.Join(blog.ContentDir, "images"))
-	blog.Echo.Static("/assets", filepath.Join(blog.themePath(), "assets"))
-	blog.Echo.GET("/", blog.indexHandler)
-	blog.Echo.GET("/page/*/", blog.pageHandler)
-	blog.Echo.GET("/*/", blog.postHandler)
-	blog.Echo.GET("/tag/", blog.tagHandler)
-	blog.Echo.GET("/tag/*/page/*/", blog.tagPageHandler)
+	blog.Echo.Static(joinPath(blog.Config.URLPrefix, "/assets"),
+		filepath.Join(blog.themePath(), "assets"))
 
 	return nil
 }
@@ -24,9 +34,6 @@ func (blog *Blog) initRoute() error {
 func (blog *Blog) completePostInfo(post *model.Post) {
 	if len(post.FeatureImage) == 0 {
 		blog.completePostFeaturedImage(post)
-	}
-	if len(post.FeatureImage) > 0 {
-		post.FeatureImage = path.Join(blog.RootURL.Path, post.FeatureImage)
 	}
 	blog.completePostUrl(post)
 }

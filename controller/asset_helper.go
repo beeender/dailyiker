@@ -5,5 +5,5 @@ import (
 )
 
 func (blog *Blog) assetHelper(context interface{}, _ *raymond.Options) interface{} {
-	return "/assets/" + raymond.Str(context)
+	return joinPath(blog.Config.URLPrefix, "/assets/" + raymond.Str(context))
 }

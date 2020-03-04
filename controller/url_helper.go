@@ -25,7 +25,7 @@ func (blog *Blog) urlHelper(opts *raymond.Options) interface{} {
 	urlStr := raymond.Str(v)
 
 	if !absolute {
-		return raymond.SafeString(urlStr)
+		return raymond.SafeString(joinPath(blog.Config.URLPrefix, urlStr))
 	}
 
 	u, e := url.Parse(urlStr)
@@ -35,6 +35,7 @@ func (blog *Blog) urlHelper(opts *raymond.Options) interface{} {
 	if u.IsAbs() {
 		return raymond.SafeString(urlStr)
 	}
-	urlStr = blog.RootURL.ResolveReference(u).String()
-	return raymond.SafeString(urlStr)
+	tmpUrl := blog.RootURL
+	tmpUrl.Path = joinPath(tmpUrl.Path, u.Path)
+	return raymond.SafeString(tmpUrl.String())
 }

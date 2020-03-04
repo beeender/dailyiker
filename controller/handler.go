@@ -54,8 +54,8 @@ func (blog *Blog) tagPageHandler(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	params = strings.Split(params[0], "/")
-	if len(params) != 2 && len(params) != 4{
+	params = strings.Split(strings.Trim(params[0], "/"), "/")
+	if len(params) != 1 && len(params) != 3 {
 		return echo.ErrNotFound
 	}
 
@@ -100,8 +100,8 @@ func (blog *Blog) postHandler(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	strList := strings.Split(params[0], "/")
-	if len(strList) != 5 {
+	strList := strings.Split(strings.Trim(params[0], "/"), "/")
+	if len(strList) != 4 {
 		return echo.ErrNotFound
 	}
 

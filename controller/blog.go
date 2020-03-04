@@ -15,7 +15,7 @@ type Blog struct {
 	Config
 	Echo        *echo.Echo
 	HostAndPort string
-	RootURL     *url.URL
+	RootURL     url.URL
 	ContentDir  string
 
 	site  model.Site
@@ -25,6 +25,8 @@ type Blog struct {
 
 type Config struct {
 	PostsPerPage int
+	URLPrefix    string
+	RootURL      string
 }
 
 func (blog *Blog) Start() error {

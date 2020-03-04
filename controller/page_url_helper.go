@@ -8,21 +8,22 @@ import (
 
 func (blog *Blog) pageURLHelper(page string, opts *raymond.Options) interface{} {
 	ctx := opts.Ctx()
+	url := ""
 
 	tag := valueOfMap(ctx, "tag")
 	if tag == nil {
 		tag = valueOfField(ctx, "Tag")
 	}
-	if !raymond.IsTrue(tag)  || len(tag.(*model.Tag).Name) == 0  {
-		if page == "1" {
-			return "/"
-		}
-		return fmt.Sprintf(`/page/%s/`, page)
+
+	if page == "1" {
+		url = "/"
+	} else {
+		url = fmt.Sprintf(`/page/%s/`, page)
+	}
+	if raymond.IsTrue(tag) && len(tag.(*model.Tag).Name) > 0  {
+		tagName := tag.(*model.Tag).Name
+		url = fmt.Sprintf("/tag/%s%s", tagName, url)
 	}
 
-	tagName := tag.(*model.Tag).Name
-	if page == "1" {
-		return fmt.Sprintf("/tag/%s/", tagName)
-	}
-	return fmt.Sprintf(`/tag/%s/page/%s/`,tagName, page)
+	return joinPath(blog.URLPrefix, url)
 }

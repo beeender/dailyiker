@@ -1,6 +1,10 @@
 package controller
 
-import "reflect"
+import (
+	"path"
+	"reflect"
+	"strings"
+)
 
 func valueOfField(d interface{}, field string) interface{} {
 	v := reflect.ValueOf(d)
@@ -23,4 +27,12 @@ func valueOfMap(d interface{}, key string) interface{} {
 	}
 	m := v.Interface().(map[string]interface{})
 	return m[key]
+}
+
+func joinPath(p1 string, p2 string) string {
+	p3 := path.Join(p1, p2)
+	if strings.HasSuffix(p2, "/") {
+		p3 += "/"
+	}
+	return p3
 }
