@@ -13,14 +13,14 @@ func (blog *Blog) urlHelper(opts *raymond.Options) interface{} {
 
 	ctx := opts.Ctx()
 	if ctx == nil {
-		return ""
+		return "/"
 	}
 	v := valueOfField(ctx, "URL")
 	if v == nil {
 		v = valueOfMap(ctx, "url")
 	}
 	if v == nil {
-		return ""
+		return "/"
 	}
 	urlStr := raymond.Str(v)
 
@@ -30,7 +30,7 @@ func (blog *Blog) urlHelper(opts *raymond.Options) interface{} {
 
 	u, e := url.Parse(urlStr)
 	if e != nil {
-		return ""
+		return "/"
 	}
 	if u.IsAbs() {
 		return raymond.SafeString(urlStr)
