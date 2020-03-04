@@ -6,6 +6,7 @@ type User struct {
 	ID           string
 	Name         string
 	ProfileImage raymond.SafeString `gorm:"column:profile_image" handlebars:"profile_image"`
+	Bio          string
 }
 
 type Users []User
